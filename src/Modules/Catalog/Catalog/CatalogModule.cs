@@ -25,7 +25,7 @@ namespace Catalog
             services.TryAddEnumerable(ServiceDescriptor.Scoped<ISaveChangesInterceptor, AuditableEntityInterceptor>());
             services.TryAddEnumerable(ServiceDescriptor.Scoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>());
 
-            services.AddScoped<ICatalogDbContext, CatalogDbContext>();
+            services.AddScoped<ICatalogDbContext>(sp => sp.GetRequiredService<CatalogDbContext>());
 
             services.AddDbContext<CatalogDbContext>((sp, options) =>
             {

@@ -1,13 +1,14 @@
 ﻿using BuildingBlocks.Messaging.Events;
+using BuildingBlocks.Messaging.Outbox;
 using Catalog.Products.Events;
-using MassTransit;
 using Microsoft.Extensions.Logging;
+using System.Text.Json;
 
 namespace Catalog.Products.EventHandlers
 {
-    public sealed class ProductPriceChangedEventHandler(IPublishEndpoint publishEndpoint, ILogger<ProductPriceChangedEventHandler> logger) : INotificationHandler<ProductPriceChangedEvent>
+    public sealed class ProductPriceChangedEventHandler(ICatalogDbContext catalogDbContext, ILogger<ProductPriceChangedEventHandler> logger) : INotificationHandler<ProductPriceChangedEvent>
     {
-        public async Task Handle(ProductPriceChangedEvent notification, CancellationToken cancellationToken)
+        public Task Handle(ProductPriceChangedEvent notification, CancellationToken cancellationToken)
         {
             logger.LogInformation("Domain event handled: {DomainEvent} - ProductId: {ProductId}, {OldPrice} -> {NewPrice}",
                                   notification.GetType().Name,
@@ -23,7 +24,20 @@ namespace Catalog.Products.EventHandlers
                 NewPrice = notification.NewPrice
             };
 
-            await publishEndpoint.Publish(productPriceChangedIntegrationEvent, cancellationToken);
+            var outboxMessage = new OutboxMessage
+            {
+                Id = Guid.NewGuid(),
+
+                Type = typeof(ProductPriceChangedIntegrationEvent).FullName!,
+
+                Content = JsonSerializer.Serialize(productPriceChangedIntegrationEvent),
+
+                OccurredOn = DateTime.UtcNow
+            };
+
+            catalogDbContext.OutboxMessages.Add(outboxMessage);
+
+            return Task.CompletedTask;
         }
     }
 }
