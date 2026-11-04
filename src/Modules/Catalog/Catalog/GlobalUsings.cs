@@ -1,0 +1,11 @@
+﻿global using BuildingBlocks.Common.CQRS;
+global using Carter;
+global using Catalog.Data;
+global using Catalog.Entities;
+global using Catalog.ValueObjects;
+global using FluentValidation;
+global using MediatR;
+global using Microsoft.AspNetCore.Builder;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Routing;
+global using Microsoft.EntityFrameworkCore;

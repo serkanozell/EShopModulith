@@ -11,4 +11,14 @@
     <Project Path="src/Host/Api/Api.csproj" Id="f4deecbe-49dc-4e2f-9f18-f6253a5baaa1" />
   </Folder>
   <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Basket/">
+    <Project Path="src/Modules/Basket/Basket/Basket.csproj" Id="60f53837-4ca6-450e-8c1e-3e37c23410ec" />
+  </Folder>
+  <Folder Name="/src/Modules/Catalog/">
+    <Project Path="src/Modules/Catalog/Catalog.Contracts/Catalog.Contracts.csproj" Id="7a6fdcb4-7d32-47e0-ac6f-ae1125a895ad" />
+    <Project Path="src/Modules/Catalog/Catalog/Catalog.csproj" Id="2871222f-2dbf-472e-b7f7-f43aa8fbe919" />
+  </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
 </Solution>
