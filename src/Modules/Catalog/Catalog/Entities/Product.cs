@@ -25,8 +25,6 @@ namespace Catalog.Entities
             Description = description;
             Price = price;
             StockAvailability = StockAvailability.FromAvailableQuantity(stockQuantity);
-            IsActive = true;
-            IsDeleted = false;
         }
 
         public static Product Create(ProductName name, decimal price, int stockQuantity, List<string> category, string? description = null)
@@ -89,12 +87,6 @@ namespace Catalog.Entities
         {
             IsActive = true;
             IsDeleted = false;
-        }
-
-        public void Delete()
-        {
-            IsActive = false;
-            IsDeleted = true;
         }
     }
 }

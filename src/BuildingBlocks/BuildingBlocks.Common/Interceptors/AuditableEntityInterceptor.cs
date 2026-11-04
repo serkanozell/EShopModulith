@@ -40,8 +40,6 @@ namespace BuildingBlocks.Common.Interceptors
                 {
                     entry.Property(nameof(IEntity.CreatedBy)).CurrentValue ??= actor;
                     entry.Property(nameof(IEntity.CreatedAt)).CurrentValue = now;
-                    //entry.Property(nameof(IEntity.IsActive)).CurrentValue = true;
-                    //entry.Property(nameof(IEntity.IsDeleted)).CurrentValue = false;
                 }
 
                 else if (entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
@@ -52,7 +50,6 @@ namespace BuildingBlocks.Common.Interceptors
 
                 else if (entry.State == EntityState.Deleted)
                 {
-                    //entry.Entity.IsActive = false; // bu kullanım da güzel
                     entry.State = EntityState.Modified;
                     entry.Property(nameof(IEntity.IsActive)).CurrentValue = false;
                     entry.Property(nameof(IEntity.IsDeleted)).CurrentValue = true;

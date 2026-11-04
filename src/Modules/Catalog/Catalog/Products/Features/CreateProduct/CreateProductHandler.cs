@@ -40,7 +40,7 @@
     {
         public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
         {
-            if (await catalogDbContext.Products.AnyAsync(p => p.Name == ProductName.Of(command.Name), cancellationToken: cancellationToken))
+            if (await catalogDbContext.Products.AnyAsync(p => p.Name == ProductName.Of(command.Name) && p.IsActive && !p.IsDeleted, cancellationToken: cancellationToken))
                 throw new InvalidOperationException($"A product named '{command.Name}' already exists.");
 
             var product = Product.Create(ProductName.Of(command.Name),

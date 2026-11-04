@@ -2,12 +2,12 @@
 {
     public abstract class Entity<T> : IEntity<T>
     {
-        public T Id { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public string? CreatedBy { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public string? UpdatedBy { get; set; }
+        public T Id { get; protected set; } = default!;
+        public bool IsActive { get; protected set; } = true;
+        public bool IsDeleted { get; protected set; }
+        public DateTime? CreatedAt { get; protected set; }
+        public string? CreatedBy { get; protected set; }
+        public DateTime? UpdatedAt { get; protected set; }
+        public string? UpdatedBy { get; protected set; }
     }
 }

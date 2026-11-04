@@ -3,6 +3,6 @@
 namespace Catalog.Products.Events
 {
     public record ProductPriceChangedEvent(ProductId ProductId,
-                                       decimal OldPrice,
-                                       decimal NewPrice) : IDomainEvent;
+                                           decimal OldPrice,
+                                           decimal NewPrice) : DomainEvent;
 }

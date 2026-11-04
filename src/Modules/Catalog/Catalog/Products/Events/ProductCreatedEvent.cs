@@ -7,5 +7,5 @@ namespace Catalog.Products.Events
                                       List<string> Category,
                                       string? Description,
                                       decimal Price,
-                                      int StockQuantity) : IDomainEvent;
+                                      int StockQuantity) : DomainEvent;
 }

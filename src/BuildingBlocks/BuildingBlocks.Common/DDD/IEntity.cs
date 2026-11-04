@@ -2,16 +2,16 @@
 {
     public interface IEntity<T> : IEntity
     {
-        public T Id { get; set; }
+        public T Id { get; }
     }
 
     public interface IEntity
     {
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? CreatedAt { get; set; }
-        public string? CreatedBy { get; set; }
-        public DateTime? UpdatedAt { get; set; }
-        public string? UpdatedBy { get; set; }
+        public bool IsActive { get; }
+        public bool IsDeleted { get; }
+        public DateTime? CreatedAt { get; }
+        public string? CreatedBy { get; }
+        public DateTime? UpdatedAt { get; }
+        public string? UpdatedBy { get; }
     }
 }
