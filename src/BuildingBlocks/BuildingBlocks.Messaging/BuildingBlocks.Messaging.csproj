@@ -17,4 +17,8 @@
 		<PackageReference Include="MassTransit.RabbitMQ" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\BuildingBlocks.Common\BuildingBlocks.Common.csproj" />
+	</ItemGroup>
+
 </Project>
