@@ -1,5 +1,6 @@
 ﻿using BuildingBlocks.Common.Data;
 using BuildingBlocks.Common.Interceptors;
+using BuildingBlocks.Messaging.Outbox;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +34,8 @@ namespace Catalog
                 options.UseNpgsql(connectionString)
                        .UseSnakeCaseNamingConvention();
             });
+
+            services.AddOutboxProcessor<CatalogDbContext>(configuration);
 
             return services;
         }

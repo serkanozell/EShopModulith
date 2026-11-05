@@ -1,6 +1,7 @@
 using BuildingBlocks.Common.Exceptions.Handler;
 using BuildingBlocks.Common.Extensions;
 using BuildingBlocks.Common.Services;
+using BuildingBlocks.Messaging.Extensions;
 using Carter;
 using Catalog;
 
@@ -13,6 +14,8 @@ builder.Services.AddCarterWithAssemblies(catalogAssembly);
 builder.Services.AddMediatRWithAssemblies(catalogAssembly);
 
 builder.Services.AddCatalogModule(builder.Configuration);
+
+builder.Services.AddMassTransitWithAssemblies(builder.Configuration, catalogAssembly);
 
 builder.Services.AddHttpContextAccessor();
 
