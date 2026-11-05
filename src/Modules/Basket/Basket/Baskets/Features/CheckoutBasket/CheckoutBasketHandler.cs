@@ -4,8 +4,7 @@ using MassTransit;
 
 namespace Basket.Baskets.Features.CheckoutBasket
 {
-    public record CheckoutBasketCommand(BasketCheckoutDto BasketCheckout)
-        : ICommand<CheckoutBasketResult>;
+    public record CheckoutBasketCommand(BasketCheckoutDto BasketCheckout) : ICommand<CheckoutBasketResult>;
     public record CheckoutBasketResult(bool IsSuccess);
     public class CheckoutBasketCommandValidator : AbstractValidator<CheckoutBasketCommand>
     {
@@ -16,7 +15,6 @@ namespace Basket.Baskets.Features.CheckoutBasket
         }
     }
 
-    // Transaction, outbox persistence and commit are handled by TransactionBehavior
     internal sealed class CheckoutBasketHandler(IBasketRepository basketRepository, IPublishEndpoint publishEndpoint, ISender sender) : ICommandHandler<CheckoutBasketCommand, CheckoutBasketResult>
     {
         public async Task<CheckoutBasketResult> Handle(CheckoutBasketCommand command, CancellationToken cancellationToken)

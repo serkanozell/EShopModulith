@@ -20,6 +20,8 @@
         {
             await repository.DeleteBasket(command.UserName, cancellationToken);
 
+            await repository.SaveChangesAsync(cancellationToken: cancellationToken);
+
             return new DeleteBasketResult(true);
         }
     }

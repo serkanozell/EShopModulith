@@ -16,6 +16,7 @@
 		<PackageReference Include="FluentValidation" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
 		<PackageReference Include="Carter" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"  />
 	</ItemGroup>
 
 </Project>

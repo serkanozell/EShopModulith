@@ -19,7 +19,7 @@
 
             shoppingCart.RemoveItem(command.ProductId);
 
-            await repository.SaveChangesAsync(command.UserName, cancellationToken);
+            await repository.SaveChangesAsync(cancellationToken);
 
             return new RemoveItemFromBasketResult(shoppingCart.Id.Value);
         }

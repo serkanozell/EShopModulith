@@ -12,23 +12,20 @@
         }
     }
 
-    internal sealed class UpdateItemPriceInBasketHandler(BasketDbContext basketDbContext) : ICommandHandler<UpdateItemPriceInBasketCommand, UpdateItemPriceInBasketResult>
+    internal sealed class UpdateItemPriceInBasketHandler(IBasketRepository basketRepository) : ICommandHandler<UpdateItemPriceInBasketCommand, UpdateItemPriceInBasketResult>
     {
         public async Task<UpdateItemPriceInBasketResult> Handle(UpdateItemPriceInBasketCommand command, CancellationToken cancellationToken)
         {
-            var itemsToUpdate = await basketDbContext.ShoppingCartItems
-                  .Where(x => x.ProductId == ProductId.Of(command.ProductId))
-                  .ToListAsync(cancellationToken);
+            var baskets = await basketRepository.GetBasketsByProductId(command.ProductId, cancellationToken);
 
-            if (itemsToUpdate.Count == 0)
+            var updatedBaskets = baskets
+                .Where(basket => basket.UpdateItemPrice(command.ProductId, command.Price, command.PriceChangedAtUtc))
+                .ToList();
+
+            if (updatedBaskets.Count == 0)
                 return new UpdateItemPriceInBasketResult(false);
 
-            foreach (var item in itemsToUpdate)
-            {
-                item.UpdatePrice(command.Price, command.PriceChangedAtUtc);
-            }
-
-            await basketDbContext.SaveChangesAsync(cancellationToken);
+            await basketRepository.SaveChangesAsync(cancellationToken: cancellationToken);
 
             return new UpdateItemPriceInBasketResult(true);
         }
