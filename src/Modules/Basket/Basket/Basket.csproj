@@ -1,18 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Basket\Features\" />
-    <Folder Include="Basket\Dtos\" />
-    <Folder Include="Basket\Entities\" />
-    <Folder Include="Basket\Exceptions\" />
-    <Folder Include="Basket\EventHandlers\" />
-    <Folder Include="Data\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Baskets\Features\" />
+		<Folder Include="Baskets\Dtos\" />
+		<Folder Include="Baskets\EventHandlers\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Common\BuildingBlocks.Common.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Messaging\BuildingBlocks.Messaging.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
+		<PackageReference Include="EFCore.NamingConventions" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+		<PackageReference Include="Scrutor" />
+	</ItemGroup>
 
 </Project>
