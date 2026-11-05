@@ -9,11 +9,11 @@ namespace Basket.Data.Repositories
         {
             var query = dbContext.ShoppingCarts
                 .Include(x => x.Items)
-                .Where(x => x.UserName == UserName.Of(userName));
+                .Where(x => x.UserName == UserName.Of(userName) && x.IsActive && !x.IsDeleted);
 
             if (asNoTracking)
             {
-                query.AsNoTracking();
+                query = query.AsNoTracking();
             }
 
             var basket = await query.SingleOrDefaultAsync(cancellationToken);
@@ -33,7 +33,7 @@ namespace Basket.Data.Repositories
             var basket = await GetBasket(userName, false, cancellationToken);
 
             dbContext.ShoppingCarts.Remove(basket);
-            await dbContext.SaveChangesAsync(cancellationToken);
+            //await dbContext.SaveChangesAsync(cancellationToken);
 
             return true;
         }

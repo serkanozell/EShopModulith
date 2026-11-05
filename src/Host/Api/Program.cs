@@ -1,3 +1,4 @@
+using Basket;
 using BuildingBlocks.Common.Exceptions.Handler;
 using BuildingBlocks.Common.Extensions;
 using BuildingBlocks.Common.Services;
@@ -8,14 +9,22 @@ using Catalog;
 var builder = WebApplication.CreateBuilder(args);
 
 var catalogAssembly = typeof(CatalogModule).Assembly;
+var basketAssembly = typeof(BasketModule).Assembly;
 
-builder.Services.AddCarterWithAssemblies(catalogAssembly);
+builder.Services.AddCarterWithAssemblies(catalogAssembly, basketAssembly);
 
-builder.Services.AddMediatRWithAssemblies(catalogAssembly);
+builder.Services.AddMediatRWithAssemblies(catalogAssembly, basketAssembly);
 
 builder.Services.AddCatalogModule(builder.Configuration);
 
-builder.Services.AddMassTransitWithAssemblies(builder.Configuration, catalogAssembly);
+builder.Services.AddBasketModule(builder.Configuration);
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
+builder.Services.AddMassTransitWithAssemblies(builder.Configuration, catalogAssembly, basketAssembly);
 
 builder.Services.AddHttpContextAccessor();
 
@@ -30,5 +39,7 @@ app.MapCarter();
 app.UseExceptionHandler(options => { });
 
 app.UseCatalogModule();
+
+app.UseBasketModule();
 
 app.Run();

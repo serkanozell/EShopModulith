@@ -13,7 +13,7 @@
             services.Decorate<IBasketRepository, CachedBasketRepository>();
 
             // 3. Data - Infrastructure services
-            var connectionString = configuration.GetConnectionString("Database");
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             services.TryAddEnumerable(ServiceDescriptor.Scoped<ISaveChangesInterceptor, AuditableEntityInterceptor>());
             services.TryAddEnumerable(ServiceDescriptor.Scoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>());

@@ -1,5 +1,6 @@
 ﻿using Basket.Baskets.Events;
 using BuildingBlocks.Common.DDD;
+using BuildingBlocks.Common.Dtos;
 
 namespace Basket.Entities
 {
@@ -12,12 +13,14 @@ namespace Basket.Entities
 
         public decimal TotalPrice => _items.Sum(i => i.Price.Value * i.Quantity.Value);
 
-        private ShoppingCart(UserName userName)
+        private ShoppingCart(ShoppingCartId id, UserName userName)
         {
-            Id = ShoppingCartId.Of(Guid.NewGuid());
+            Id = id;
             UserName = userName;
-            IsActive = true;
-            IsDeleted = false;
+        }
+
+        private ShoppingCart(UserName userName) : this(ShoppingCartId.Of(Guid.NewGuid()), userName)
+        {
         }
 
         public static ShoppingCart Create(UserName userName)
@@ -94,6 +97,41 @@ namespace Basket.Entities
         {
             IsActive = true;
             IsDeleted = false;
+        }
+
+        public void Checkout(
+                             string UserName,
+                             Guid CustomerId,
+                             decimal TotalPrice,
+                             string FirstName,
+                             string LastName,
+                             string EmailAddress,
+                             string AddressLine,
+                             string Country,
+                             string State,
+                             string ZipCode,
+                             string CardName,
+                             string CardNumber,
+                             string Expiration,
+                             string Cvv,
+                             int PaymentMethod,
+                             List<OrderItemDto> OrderItems)
+        {
+            if (!_items.Any())
+                throw new InvalidOperationException("Cannot checkout an empty cart.");
+            AddDomainEvent(new BasketCheckoutedEvent(Id.Value, UserName, CustomerId, TotalPrice, FirstName, LastName, EmailAddress, AddressLine, Country, State, ZipCode, CardName, CardNumber, Expiration, Cvv, PaymentMethod, OrderItems));
+        }
+
+        // Cache/persistence'tan geri yükleme için. Domain event üretmez.
+        public static ShoppingCart Restore(ShoppingCartId id, UserName userName, IEnumerable<ShoppingCartItem> items)
+        {
+            ArgumentNullException.ThrowIfNull(id);
+            ArgumentNullException.ThrowIfNull(userName);
+            ArgumentNullException.ThrowIfNull(items);
+
+            var cart = new ShoppingCart(id, userName);
+            cart._items.AddRange(items);
+            return cart;
         }
     }
 }
