@@ -1,4 +1,6 @@
-﻿namespace BuildingBlocks.Common.Dtos
+﻿using BuildingBlocks.Common.Dtos;
+
+namespace BuildingBlocks.Messaging.Events
 {
     public record BasketCheckoutIntegrationEvent(
         string UserName,

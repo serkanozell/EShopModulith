@@ -7,12 +7,14 @@ namespace Catalog.Data
     {
         DbSet<Product> Products { get; }
         DbSet<OutboxMessage> OutboxMessages { get; }
+        public DbSet<InboxMessage> InboxMessages { get; }
     }
 
     public class CatalogDbContext(DbContextOptions<CatalogDbContext> options) : DbContext(options), ICatalogDbContext
     {
         public DbSet<Product> Products => Set<Product>();
         public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+        public DbSet<InboxMessage> InboxMessages => Set<InboxMessage>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -21,6 +23,8 @@ namespace Catalog.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CatalogDbContext).Assembly);
 
             modelBuilder.ApplyOutboxConfiguration();
+
+            modelBuilder.ApplyInboxConfiguration();
 
             base.OnModelCreating(modelBuilder);
         }

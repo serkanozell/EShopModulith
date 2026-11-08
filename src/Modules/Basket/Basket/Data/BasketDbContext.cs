@@ -5,16 +5,19 @@
         public DbSet<ShoppingCart> ShoppingCarts => Set<ShoppingCart>();
         public DbSet<ShoppingCartItem> ShoppingCartItems => Set<ShoppingCartItem>();
         public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+        public DbSet<InboxMessage> InboxMessages => Set<InboxMessage>();
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            builder.HasDefaultSchema("basket");
+            modelBuilder.HasDefaultSchema("basket");
 
-            builder.ApplyConfigurationsFromAssembly(typeof(BasketDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(BasketDbContext).Assembly);
 
-            builder.ApplyOutboxConfiguration();
+            modelBuilder.ApplyOutboxConfiguration();
 
-            base.OnModelCreating(builder);
+            modelBuilder.ApplyInboxConfiguration();
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

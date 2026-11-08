@@ -37,6 +37,8 @@ namespace Catalog
 
             services.AddOutboxProcessor<CatalogDbContext>(configuration);
 
+            services.AddInboxProcessor<CatalogDbContext>(configuration, typeof(CatalogModule).Assembly);
+
             return services;
         }
 

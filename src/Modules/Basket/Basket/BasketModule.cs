@@ -27,6 +27,8 @@
 
             services.AddOutboxProcessor<BasketDbContext>(configuration);
 
+            services.AddInboxProcessor<BasketDbContext>(configuration, typeof(BasketModule).Assembly);
+
             return services;
         }
 

@@ -139,6 +139,51 @@ namespace Basket.Migrations
                     b.ToTable("shopping_cart_items", "basket");
                 });
 
+            modelBuilder.Entity("BuildingBlocks.Messaging.Inbox.InboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("content");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("text")
+                        .HasColumnName("error");
+
+                    b.Property<DateTime>("OccurredOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("occurred_on");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("processed_on");
+
+                    b.Property<DateTime>("ReceivedOn")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("received_on");
+
+                    b.Property<int>("RetryCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("retry_count");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id")
+                        .HasName("pk_inbox_messages");
+
+                    b.HasIndex("ProcessedOn", "OccurredOn")
+                        .HasDatabaseName("ix_inbox_messages_processed_on_occurred_on");
+
+                    b.ToTable("inbox_messages", "basket");
+                });
+
             modelBuilder.Entity("BuildingBlocks.Messaging.Outbox.OutboxMessage", b =>
                 {
                     b.Property<Guid>("Id")

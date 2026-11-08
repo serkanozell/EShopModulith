@@ -1,5 +1,5 @@
 ﻿using Basket.Baskets.Events;
-using BuildingBlocks.Common.Dtos;
+using BuildingBlocks.Messaging.Events;
 using Microsoft.Extensions.Logging;
 
 namespace Basket.Baskets.EventHandlers

@@ -23,3 +23,4 @@ global using Catalog.Contracts.Features;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.AspNetCore.Routing;
+global using BuildingBlocks.Messaging.Inbox;
